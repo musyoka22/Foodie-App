@@ -35,7 +35,16 @@
      <br>prepared meals and snacks.
      Order now and experience the taste of quality food!</p>
    <div class="button">
-    <a href="order.html">Order</a>
+    <script src="order.js"></script>
+    <button id="orderButton">Order Now</button>
+  
+    <script>
+      // Attach click event handler to the button
+      document.getElementById("orderButton").addEventListener("click", function() {
+        // Call a function from order.js
+        orderAction();
+      });
+    </script>
      <button class="btn">Explore More</button>
    </div>
 

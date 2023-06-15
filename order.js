@@ -1,54 +1,27 @@
-let make=new Typed('.make',{
-    strings:[` an Order`, `a good choice with us`, ],
-    typedSpeed:100,
-    backSpeed:100,
-    backDelay:200,
-    loop:true
-})
-function validateForm() {
-    var name = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    var quantity = document.getElementById("quantity").value;
-    var address = document.getElementById("address").value;
+const nodemailer = require('nodemailer');
 
-    if (name === "") {
-        alert("Please enter your name.");
-        return false;
-    }
+// Configure the SMTP transporter
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'your-email@gmail.com', // Replace with your Gmail address
+    pass: 'your-password' // Replace with your Gmail password
+  }
+});
 
-    if (email === "") {
-        alert("Please enter your email.");
-        return false;
-    }
-    var emailRegex = /^\S+@\S+\.\S+$/;
-    if (!email.match(emailRegex)) {
-        alert("Please enter a valid email address.");
-        return false;
-    }
+// Email content
+const mailOptions = {
+  from: 'your-email@gmail.com',
+  to: 'customer-email@example.com', // Replace with the customer's email address
+  subject: 'Order Confirmation',
+  text: 'Thank you for your order! Your order has been confirmed.'
+};
 
-    if (password === "") {
-        alert("Please enter your password.");
-        return false;
-    }
-    if (password.length < 6) {
-        alert("Password should be at least 6 characters long.");
-        return false;
-    }
-
-    if (quantity === "") {
-        alert("Please enter the quantity.");
-        return false;
-    }
-    if (isNaN(quantity)) {
-        alert("Please enter a valid quantity.");
-        return false;
-    }
-
-    if (address === "") {
-        alert("Please enter your address.");
-        return false;
-    }
-
-    return true;
-}
+// Send the email
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    console.log('Error sending email:', error);
+  } else {
+    console.log('Email sent:', info.response);
+  }
+});
